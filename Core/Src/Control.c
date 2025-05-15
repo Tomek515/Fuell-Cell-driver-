@@ -57,23 +57,23 @@ void Controlsystem(void){
 		LoadFLAG = false;
 	}
 
-	 bool manualOverride = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_0) == GPIO_PIN_SET;
+	 bool manualOverride = HAL_GPIO_ReadPin(MANUAL_GPIO_Port, MANUAL_Pin) == GPIO_PIN_SET;
 
 	    if (LoadFLAG || manualOverride)
 	    {
 
 	        BLOWER(30);
 	        SetCellPWM(100);
-	        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_8, GPIO_PIN_SET); // hydrogenvalve
-
+	        HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_SET); // hydrogenvalve
+	        HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_SET);
 	    }
 	    else
 	    {
 
 	    	SetCellPWM(0);
 	    	BLOWER(0);
-	    	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_8, GPIO_PIN_RESET);
-
+	    	HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_RESET);
+	    	HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_RESET);
 
 	    }
 
@@ -84,8 +84,8 @@ void ControlsystemInit(void){
 
 	SetCellPWM(0);
 	BLOWER(0);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(PURGE_GPIO_Port, PURGE_Pin, GPIO_PIN_RESET);
 
 }

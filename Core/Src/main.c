@@ -113,6 +113,8 @@ int main(void)
 
 
 
+  ControlsystemInit();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
