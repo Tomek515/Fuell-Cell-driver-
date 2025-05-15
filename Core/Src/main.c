@@ -441,7 +441,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, PURGE_Pin|HUMIDIFIER_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, H_VALVE_Pin|GPIO_PIN_3|GPIO_PIN_5, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PURGE_Pin HUMIDIFIER_Pin */
+  GPIO_InitStruct.Pin = PURGE_Pin|HUMIDIFIER_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : H_VALVE_Pin PD3 PD5 */
   GPIO_InitStruct.Pin = H_VALVE_Pin|GPIO_PIN_3|GPIO_PIN_5;

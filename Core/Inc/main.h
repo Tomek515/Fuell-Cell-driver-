@@ -59,6 +59,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define PURGE_Pin GPIO_PIN_6
+#define PURGE_GPIO_Port GPIOC
+#define HUMIDIFIER_Pin GPIO_PIN_7
+#define HUMIDIFIER_GPIO_Port GPIOC
 #define H_VALVE_Pin GPIO_PIN_8
 #define H_VALVE_GPIO_Port GPIOD
 #define MANUAL_Pin GPIO_PIN_0
