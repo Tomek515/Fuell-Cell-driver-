@@ -15,16 +15,18 @@ void SetCellPWM(uint8_t duty_percent)
     uint32_t compare = duty_percent * (arr + 1) / 100;
 
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, compare);
+
     if (duty_percent == 0)
-      {
-          HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
-          HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_3); // wyłącz komplementarne wyjście
-      }
-      else
-      {
-          HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
-          HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3); // włącz jeśli nie był
-      }
+    {
+        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 0);
+        HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_3);
+        HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
+    }
+    else
+    {
+        HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
+        HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
+    }
 }
 
 void BLOWER(uint8_t duty_percent){
@@ -65,7 +67,7 @@ void Controlsystem(void){
 
 
 	        BLOWER(30);
-	        SetCellPWM(50);
+	        SetCellPWM(100);
 	    }
 	    else
 	    {

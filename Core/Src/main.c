@@ -118,7 +118,7 @@ int main(void)
   {
 	  Controlsystem();
 	  voltage1=((adc_vals[1] / 4095.0f) * 3.3f*9.41f);
-	  /* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
