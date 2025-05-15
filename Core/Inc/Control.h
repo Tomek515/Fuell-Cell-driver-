@@ -26,5 +26,6 @@ extern TIM_HandleTypeDef htim1;
 void BLOWER(uint8_t duty_percent);
 void ControlSystem(void);
 void SetCellPWM(uint8_t duty_percent);
+void ControlSystemInit(void);
 
 #endif /* INC_CONTROL_H_ */

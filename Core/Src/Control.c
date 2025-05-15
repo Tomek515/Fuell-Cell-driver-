@@ -61,23 +61,29 @@ void Controlsystem(void){
 
 	    if (LoadFLAG || manualOverride)
 	    {
-	        // Aktywacja systemu
-	         // Hydrogen valve
-
-
 
 	        BLOWER(30);
 	        SetCellPWM(100);
+	        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_8, GPIO_PIN_SET); // hydrogenvalve
+
 	    }
 	    else
 	    {
-	        // Dezaktywacja systemu
+
 	    	SetCellPWM(0);
+	    	BLOWER(0);
+	    	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_8, GPIO_PIN_RESET);
 
-	    	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET);
 
-	        BLOWER(0);
 	    }
 
+
+}
+
+void ControlsystemInit(void){
+
+	SetCellPWM(0);
+	BLOWER(0);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_8, GPIO_PIN_RESET);
 
 }
