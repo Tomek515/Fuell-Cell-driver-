@@ -6,7 +6,7 @@
  */
 #include "Control.h"
 
-
+/*
 void SetCellPWM(uint8_t duty_percent)
 {
     if (duty_percent > 100) duty_percent = 100;
@@ -27,7 +27,7 @@ void SetCellPWM(uint8_t duty_percent)
         HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
         HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
     }
-}
+}*/
 
 void BLOWER(uint8_t duty_percent){
 
@@ -61,16 +61,18 @@ void Controlsystem(void){
 
 	    if (LoadFLAG || manualOverride)
 	    {
-
-	        BLOWER(30);
-	        SetCellPWM(100);
+	    	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET);
+	        BLOWER(100);
+	        //SetCellPWM(100);
 	        HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_SET); // hydrogenvalve
 	        HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_SET);
+
 	    }
 	    else
 	    {
 
-	    	SetCellPWM(0);
+	    	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET);
+	    	//SetCellPWM(0);
 	    	BLOWER(0);
 	    	HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_RESET);
 	    	HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_RESET);
@@ -82,7 +84,7 @@ void Controlsystem(void){
 
 void ControlsystemInit(void){
 
-	SetCellPWM(0);
+	//SetCellPWM(0);
 	BLOWER(0);
 	HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_RESET);

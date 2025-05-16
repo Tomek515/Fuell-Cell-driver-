@@ -1,4 +1,3 @@
-../Core/Src/Control.c:10:6:SetCellPWM	3
 ../Core/Src/Control.c:32:6:BLOWER	2
 ../Core/Src/Control.c:40:6:Controlsystem	5
-../Core/Src/Control.c:83:6:ControlsystemInit	1
+../Core/Src/Control.c:85:6:ControlsystemInit	1

@@ -15,7 +15,7 @@
 #include "main.h"
 
 extern TIM_HandleTypeDef htim3;
-extern TIM_HandleTypeDef htim1;
+//extern TIM_HandleTypeDef htim1;
 
 #define CAPACITOR_LOW_LEVEL 15.0f
 #define CAPACITOR_HIGH_LEVEL 25.0f
