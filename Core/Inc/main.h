@@ -65,6 +65,10 @@ void Error_Handler(void);
 #define HUMIDIFIER_GPIO_Port GPIOC
 #define H_VALVE_Pin GPIO_PIN_8
 #define H_VALVE_GPIO_Port GPIOD
+#define CS_CARD_Pin GPIO_PIN_15
+#define CS_CARD_GPIO_Port GPIOA
+#define CS_TEMPERATURE_Pin GPIO_PIN_8
+#define CS_TEMPERATURE_GPIO_Port GPIOC
 #define MANUAL_Pin GPIO_PIN_0
 #define MANUAL_GPIO_Port GPIOD
 

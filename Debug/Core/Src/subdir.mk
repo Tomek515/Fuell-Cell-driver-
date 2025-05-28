@@ -6,6 +6,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Core/Src/Control.c \
+../Core/Src/MAX31865.c \
 ../Core/Src/Parameterscheck.c \
 ../Core/Src/main.c \
 ../Core/Src/measurments.c \
@@ -17,6 +18,7 @@ C_SRCS += \
 
 OBJS += \
 ./Core/Src/Control.o \
+./Core/Src/MAX31865.o \
 ./Core/Src/Parameterscheck.o \
 ./Core/Src/main.o \
 ./Core/Src/measurments.o \
@@ -28,6 +30,7 @@ OBJS += \
 
 C_DEPS += \
 ./Core/Src/Control.d \
+./Core/Src/MAX31865.d \
 ./Core/Src/Parameterscheck.d \
 ./Core/Src/main.d \
 ./Core/Src/measurments.d \
@@ -45,7 +48,7 @@ Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/Control.cyclo ./Core/Src/Control.d ./Core/Src/Control.o ./Core/Src/Control.su ./Core/Src/Parameterscheck.cyclo ./Core/Src/Parameterscheck.d ./Core/Src/Parameterscheck.o ./Core/Src/Parameterscheck.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/measurments.cyclo ./Core/Src/measurments.d ./Core/Src/measurments.o ./Core/Src/measurments.su ./Core/Src/stm32g0xx_hal_msp.cyclo ./Core/Src/stm32g0xx_hal_msp.d ./Core/Src/stm32g0xx_hal_msp.o ./Core/Src/stm32g0xx_hal_msp.su ./Core/Src/stm32g0xx_it.cyclo ./Core/Src/stm32g0xx_it.d ./Core/Src/stm32g0xx_it.o ./Core/Src/stm32g0xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32g0xx.cyclo ./Core/Src/system_stm32g0xx.d ./Core/Src/system_stm32g0xx.o ./Core/Src/system_stm32g0xx.su
+	-$(RM) ./Core/Src/Control.cyclo ./Core/Src/Control.d ./Core/Src/Control.o ./Core/Src/Control.su ./Core/Src/MAX31865.cyclo ./Core/Src/MAX31865.d ./Core/Src/MAX31865.o ./Core/Src/MAX31865.su ./Core/Src/Parameterscheck.cyclo ./Core/Src/Parameterscheck.d ./Core/Src/Parameterscheck.o ./Core/Src/Parameterscheck.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/measurments.cyclo ./Core/Src/measurments.d ./Core/Src/measurments.o ./Core/Src/measurments.su ./Core/Src/stm32g0xx_hal_msp.cyclo ./Core/Src/stm32g0xx_hal_msp.d ./Core/Src/stm32g0xx_hal_msp.o ./Core/Src/stm32g0xx_hal_msp.su ./Core/Src/stm32g0xx_it.cyclo ./Core/Src/stm32g0xx_it.d ./Core/Src/stm32g0xx_it.o ./Core/Src/stm32g0xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32g0xx.cyclo ./Core/Src/system_stm32g0xx.d ./Core/Src/system_stm32g0xx.o ./Core/Src/system_stm32g0xx.su
 
 .PHONY: clean-Core-2f-Src
 

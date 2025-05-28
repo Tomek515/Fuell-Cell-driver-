@@ -39,12 +39,12 @@ void BLOWER(uint8_t duty_percent){
 
 void Controlsystem(void){
 	Read_ADC_Channels();
-	static bool LoadFLAG;
+
     //float temperature = Convert_ADC_to_Temperature(adc_vals[0]);
 	float CapacitorVoltage = Convert_ADC_to_CapacitorVoltage(adc_vals[3]);
 	float CellVoltage = Convert_ADC_to_CellVoltage(adc_vals[1]);
 	float CellCurrent = Convert_ADC_to_CellCurrent(adc_vals[2]);
-
+	static bool LoadFLAG;
 	float POWER_CELL = CellVoltage * CellCurrent;
 
 
