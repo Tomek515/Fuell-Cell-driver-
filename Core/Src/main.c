@@ -54,9 +54,9 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 
 float voltage, voltage1, voltage2, voltage3, prad, CellVoltagee, t;
-Max31865_t  pt100;
 bool        pt100isOK;
 float       pt100Temp;
+Max31865_t  pt100;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

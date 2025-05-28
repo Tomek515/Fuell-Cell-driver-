@@ -37,7 +37,7 @@ Core/Src/Control.o: ../Core/Src/Control.c ../Core/Inc/Control.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h \
- ../Core/Inc/Parameterscheck.h
+ ../Core/Inc/Parameterscheck.h ../Core/Inc/MAX31865.h
 ../Core/Inc/Control.h:
 ../Core/Inc/measurments.h:
 ../Core/Inc/main.h:
@@ -79,3 +79,4 @@ Core/Src/Control.o: ../Core/Src/Control.c ../Core/Inc/Control.h \
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h:
 ../Core/Inc/Parameterscheck.h:
+../Core/Inc/MAX31865.h:

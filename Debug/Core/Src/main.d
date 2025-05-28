@@ -39,7 +39,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/measurments.h ../Core/Inc/main.h \
  ../Core/Inc/Parameterscheck.h ../Core/Inc/Control.h \
  ../Core/Inc/measurments.h ../Core/Inc/Parameterscheck.h \
- ../Core/Inc/MAX31865.h
+ ../Core/Inc/MAX31865.h ../Core/Inc/MAX31865.h
 ../Core/Inc/main.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h:
 ../Core/Inc/stm32g0xx_hal_conf.h:
@@ -84,4 +84,5 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/Control.h:
 ../Core/Inc/measurments.h:
 ../Core/Inc/Parameterscheck.h:
+../Core/Inc/MAX31865.h:
 ../Core/Inc/MAX31865.h:
