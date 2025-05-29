@@ -1,3 +1,4 @@
-../Core/Src/Control.c:34:6:BLOWER	24	static
-../Core/Src/Control.c:42:6:Controlsystem	32	static
-../Core/Src/Control.c:89:6:ControlsystemInit	8	static
+../Core/Src/Control.c:12:6:SetCellPWM	24	static
+../Core/Src/Control.c:19:6:BLOWER	24	static
+../Core/Src/Control.c:27:6:Controlsystem	32	static
+../Core/Src/Control.c:76:6:ControlsystemInit	8	static

@@ -8,29 +8,14 @@
 
 
 
-/*
-void SetCellPWM(uint8_t duty_percent)
-{
-    if (duty_percent > 100) duty_percent = 100;
 
-    uint32_t arr = __HAL_TIM_GET_AUTORELOAD(&htim1);
-    uint32_t compare = duty_percent * (arr + 1) / 100;
+void SetCellPWM(uint8_t duty_percent){
+if (duty_percent > 100) duty_percent = 100;
 
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, compare);
+   uint32_t pulse = duty_percent * (__HAL_TIM_GET_AUTORELOAD(&htim1) + 1) / 100;
 
-    if (duty_percent == 0)
-    {
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 0);
-        HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_3);
-        HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
-    }
-    else
-    {
-        HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
-        HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
-    }
-}*/
-
+   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, pulse);
+}
 void BLOWER(uint8_t duty_percent){
 
 
@@ -49,6 +34,7 @@ void Controlsystem(void){
 	pt100isOK = Max31865_readTempC(&pt100,&t);
 	pt100Temp = Max31865_Filter(t,pt100Temp,0.1);
 	static bool LoadFLAG;
+	static bool previousLoadFlag;
 	float POWER_CELL = CellVoltage * CellCurrent;
 
 
@@ -62,12 +48,13 @@ void Controlsystem(void){
 	}
 
 	 bool manualOverride = HAL_GPIO_ReadPin(MANUAL_GPIO_Port, MANUAL_Pin) == GPIO_PIN_SET;
-
-	    if (LoadFLAG || manualOverride)
+	 bool controlactive = LoadFLAG || manualOverride;
+	    if (controlactive)
 	    {
+
 	    	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET);
 	        BLOWER(100);
-	        //SetCellPWM(100);
+	        SetCellPWM(0);
 	        HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_SET); // hydrogenvalve
 	        HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_SET);
 
@@ -76,7 +63,7 @@ void Controlsystem(void){
 	    {
 
 	    	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET);
-	    	//SetCellPWM(0);
+	    	SetCellPWM(100);
 	    	BLOWER(0);
 	    	HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_RESET);
 	    	HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_RESET);

@@ -18,11 +18,12 @@ extern Max31865_t  pt100;
 extern bool        pt100isOK;
 extern float       pt100Temp;
 extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim1;
 extern float t;
 //extern TIM_HandleTypeDef htim1;
 
-#define CAPACITOR_LOW_LEVEL 30.0f
-#define CAPACITOR_HIGH_LEVEL 43.5f
+#define CAPACITOR_LOW_LEVEL 15.0f
+#define CAPACITOR_HIGH_LEVEL 20.5f
 #define TEMP_MAX 55.0f
 #define POWER_MIN 200.0f
 #define POWER_MAX 250.0f
