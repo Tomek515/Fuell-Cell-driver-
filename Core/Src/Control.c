@@ -24,6 +24,14 @@ void BLOWER(uint8_t duty_percent){
 
 }
 
+
+
+static bool LoadFLAG;
+static bool previousLoadFlag = false;
+static bool softStartActive = false;
+static uint8_t soft_pwm = 100;
+
+
 void Controlsystem(void){
 	Read_ADC_Channels();
 
@@ -33,8 +41,9 @@ void Controlsystem(void){
 	float CellCurrent = Convert_ADC_to_CellCurrent(adc_vals[2]);
 	pt100isOK = Max31865_readTempC(&pt100,&t);
 	pt100Temp = Max31865_Filter(t,pt100Temp,0.1);
-	static bool LoadFLAG;
-	static bool previousLoadFlag;
+
+	bool manualOverride = HAL_GPIO_ReadPin(MANUAL_GPIO_Port, MANUAL_Pin) == GPIO_PIN_SET;
+	bool controlactive = LoadFLAG || manualOverride;
 	float POWER_CELL = CellVoltage * CellCurrent;
 
 
@@ -47,30 +56,36 @@ void Controlsystem(void){
 		LoadFLAG = false;
 	}
 
-	 bool manualOverride = HAL_GPIO_ReadPin(MANUAL_GPIO_Port, MANUAL_Pin) == GPIO_PIN_SET;
-	 bool controlactive = LoadFLAG || manualOverride;
-	    if (controlactive)
-	    {
+	if (controlactive && !previousLoadFlag) {
+	    softStartActive = true;
+	    soft_pwm = 100;
 
-	    	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET);
-	        BLOWER(100);
-	        SetCellPWM(0);
-	        HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_SET); // hydrogenvalve
-	        HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_SET);
+	    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET);
+	    HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_SET);
+	    HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_SET);
+	    BLOWER(100);
+	}
+	previousLoadFlag = controlactive;
 
+	    if (controlactive) {
+	        if (softStartActive) {
+	            if (soft_pwm > 0) {
+	                soft_pwm -= 4;
+	                SetCellPWM(soft_pwm);
+	                HAL_Delay(1);
+	            } else {
+	                softStartActive = false;
+	            }
+	        } else {
+	            SetCellPWM(0);
+	        }
+	    } else {
+	        SetCellPWM(100);
+	        BLOWER(0);
+	        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET);
+	        HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_RESET);
+	        HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_RESET);
 	    }
-	    else
-	    {
-
-	    	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET);
-	    	SetCellPWM(100);
-	    	BLOWER(0);
-	    	HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_RESET);
-	    	HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_RESET);
-
-	    }
-
-
 }
 
 void ControlsystemInit(void){
