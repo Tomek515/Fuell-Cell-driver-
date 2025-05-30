@@ -26,26 +26,41 @@ void BLOWER(uint8_t duty_percent){
 
 
 
-static bool LoadFLAG;
+static bool LoadFLAG = false;
 static bool previousLoadFlag = false;
 static bool softStartActive = false;
 static uint8_t soft_pwm = 100;
+static bool safetyLockout = false;
+#define ALPHA 0.3f
 
 
+float CapacitorVoltage = 25.0f;
+float CellVoltage = 0.0f;
+float CellCurrent = 0.0f;
 void Controlsystem(void){
 	Read_ADC_Channels();
 
     //float temperature = Convert_ADC_to_Temperature(adc_vals[0]);
-	float CapacitorVoltage = Convert_ADC_to_CapacitorVoltage(adc_vals[3]);
-	float CellVoltage = Convert_ADC_to_CellVoltage(adc_vals[1]);
-	float CellCurrent = Convert_ADC_to_CellCurrent(adc_vals[2]);
+	float rawCapacitorVoltage = Convert_ADC_to_CapacitorVoltage(adc_vals[3]);
+	float rawCellVoltage = Convert_ADC_to_CellVoltage(adc_vals[1]);
+	float rawCellCurrent = Convert_ADC_to_CellCurrent(adc_vals[2]);
+
+	CapacitorVoltage = ALPHA * rawCapacitorVoltage + (1.0f - ALPHA) * CapacitorVoltage;
+	CellVoltage = ALPHA * rawCellVoltage + (1.0f - ALPHA) * CellVoltage;
+	CellCurrent = ALPHA * rawCellCurrent + (1.0f - ALPHA) * CellCurrent;
+
 	pt100isOK = Max31865_readTempC(&pt100,&t);
 	pt100Temp = Max31865_Filter(t,pt100Temp,0.1);
 
 	bool manualOverride = HAL_GPIO_ReadPin(MANUAL_GPIO_Port, MANUAL_Pin) == GPIO_PIN_SET;
-	bool controlactive = LoadFLAG || manualOverride;
+
 	float POWER_CELL = CellVoltage * CellCurrent;
 
+	if (pt100Temp > MAX_SAFE_TEMP || POWER_CELL > MAX_SAFE_POWER) {
+	    safetyLockout = true;
+	} else {
+	    safetyLockout = false;
+	}
 
 	if (CapacitorVoltage < CAPACITOR_LOW_LEVEL)
 	{
@@ -55,7 +70,7 @@ void Controlsystem(void){
 	{
 		LoadFLAG = false;
 	}
-
+	bool controlactive = (LoadFLAG || manualOverride) && !safetyLockout;
 	if (controlactive && !previousLoadFlag) {
 	    softStartActive = true;
 	    soft_pwm = 100;
@@ -90,7 +105,7 @@ void Controlsystem(void){
 
 void ControlsystemInit(void){
 
-	//SetCellPWM(0);
+	SetCellPWM(100);
 	BLOWER(0);
 	HAL_GPIO_WritePin(H_VALVE_GPIO_Port, H_VALVE_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_RESET);

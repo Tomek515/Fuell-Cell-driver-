@@ -120,7 +120,7 @@ int main(void)
 
   //__HAL_TIM_MOE_ENABLE(&htim1);
 
-  //ControlsystemInit();
+  ControlsystemInit();
 
   /* USER CODE END 2 */
 

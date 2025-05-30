@@ -1,4 +1,4 @@
 ../Core/Src/Control.c:12:6:SetCellPWM	24	static
 ../Core/Src/Control.c:19:6:BLOWER	24	static
-../Core/Src/Control.c:35:6:Controlsystem	32	static
-../Core/Src/Control.c:91:6:ControlsystemInit	8	static
+../Core/Src/Control.c:40:6:Controlsystem	40	static
+../Core/Src/Control.c:106:6:ControlsystemInit	8	static

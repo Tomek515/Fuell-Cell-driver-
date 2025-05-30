@@ -22,11 +22,10 @@ extern TIM_HandleTypeDef htim1;
 extern float t;
 //extern TIM_HandleTypeDef htim1;
 
-#define CAPACITOR_LOW_LEVEL 15.0f
-#define CAPACITOR_HIGH_LEVEL 20.5f
-#define TEMP_MAX 55.0f
-#define POWER_MIN 200.0f
-#define POWER_MAX 250.0f
+#define CAPACITOR_LOW_LEVEL 25.0f
+#define CAPACITOR_HIGH_LEVEL 42.5f
+#define MAX_SAFE_TEMP      60.0f
+#define MAX_SAFE_POWER     1000.0f
 
 void BLOWER(uint8_t duty_percent);
 void Controlsystem(void);
