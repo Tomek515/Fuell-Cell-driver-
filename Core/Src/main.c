@@ -128,6 +128,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  HAL_GPIO_WritePin(HUMIDIFIER_GPIO_Port, HUMIDIFIER_Pin, GPIO_PIN_SET);
 	  Controlsystem();
 	  voltage1=((adc_vals[1] / 4095.0f) * 3.3f*9.41f);
 	  CellVoltagee = Convert_ADC_to_CapacitorVoltage(adc_vals[3]);
